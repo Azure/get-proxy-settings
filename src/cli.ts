@@ -1,6 +1,6 @@
-import { getSystemProxy } from "./index";
+import { getProxySettings } from "./index";
 
-getSystemProxy().then((settings) => {
+getProxySettings().then((settings) => {
     if (settings) {
         // tslint:disable:no-console
         console.log(`http=${settings.http}`);

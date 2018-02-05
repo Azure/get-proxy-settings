@@ -1,4 +1,6 @@
 # System Proxy
+[![Build Status](https://travis-ci.org/Azure/get-proxy-settings.svg?branch=master)](https://travis-ci.org/Azure/get-proxy-settings)
+[![npm version](https://badge.fury.io/js/get-proxy-settings.svg)](https://badge.fury.io/js/get-proxy-settings)
 
 ## Install
 
@@ -10,12 +12,13 @@ npm install --save system-proxy
 
 **Import**
 ```js
-import getSystemProxy from "system-prooxy";
-// or with named import
-import { getSystemProxy } from "system-prooxy";
+// Default import
+import getSystemProxy from "get-proxy-settings";
+// With named import
+import { getSystemProxy } from "get-proxy-settings";
 
 // Or with commonjs
-const getSystemProxy = require("system-prooxy");
+const getSystemProxy = require("get-proxy-settings");
 ```
 
 **Use**

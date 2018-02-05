@@ -24,7 +24,6 @@ async function execAsync(command: string): Promise<ExecOutput> {
     return new Promise<ExecOutput>((resolve, reject) => {
         exec(command, (err, stdout, stderr) => {
             if (err) {
-                console.error("Err", err);
                 reject(err);
             } else {
                 resolve({ stdout, stderr });

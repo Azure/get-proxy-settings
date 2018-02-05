@@ -8,7 +8,7 @@ export interface ProxySettings {
     https?: string;
 }
 
-export async function getSystemProxy() {
+export async function getProxySettings() {
     const envProxy = getEnvProxy();
     if (envProxy) { return envProxy; }
     if (process.platform === "win32") {
@@ -18,7 +18,7 @@ export async function getSystemProxy() {
     }
 }
 
-export default getSystemProxy;
+export default getProxySettings;
 
 export async function getProxyWindows(): Promise<ProxySettings> {
     const values = await openKey(Hive.HKCU, "Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings");

@@ -1,10 +1,13 @@
 language: node_js
 node_js:
  - 9
+branch:
+  only:
+   - master
 
-install: 
+install:
   - npm install
 
-script: 
+script:
   - npm run build
   - npm run tslint

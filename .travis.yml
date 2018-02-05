@@ -10,8 +10,6 @@ script:
 - npm run build
 - npm run tslint
 
-after
-
 deploy:
   provider: npm
   tag: next

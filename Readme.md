@@ -9,7 +9,7 @@ On windows it will then look at the internet settings in the registry.
 ## Install
 
 ```
-npm install --save system-proxy
+npm install --save get-proxy-settings
 ```
 
 ## Usage

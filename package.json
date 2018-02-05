@@ -1,0 +1,32 @@
+{
+  "name": "system-proxy",
+  "version": "0.1.0",
+  "description": "Retrieve proxy settings specified by the system",
+  "main": "index.js",
+  "scripts": {
+    "tslint": "tslint src/**/*.ts",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Azure/system-proxy.git"
+  },
+  "keywords": [
+    "proxy",
+    "http_proxy",
+    "https_proxy"
+  ],
+  "author": "tiguerin@microsoft.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Azure/system-proxy/issues"
+  },
+  "homepage": "https://github.com/Azure/system-proxy#readme",
+  "devDependencies": {
+    "@types/node": "~9.4.0",
+    "typescript": "~2.7.1"
+  },
+  "dependencies": {
+    "npm-conf": "~1.1.3"
+  }
+}

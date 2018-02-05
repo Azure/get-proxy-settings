@@ -2,7 +2,8 @@
   "name": "system-proxy",
   "version": "0.1.0",
   "description": "Retrieve proxy settings specified by the system",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "tslint": "tslint src/**/*.ts",
     "build": "tsc"

@@ -22,7 +22,7 @@
   "bugs": {
     "url": "https://github.com/Azure/system-proxy/issues"
   },
-  "homepage": "https://github.com/Azure/system-proxy#readme",
+  "homepage": "https://github.com/Azure/system-proxy",
   "devDependencies": {
     "@types/node": "~9.4.0",
     "typescript": "~2.7.1"

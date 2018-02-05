@@ -7,7 +7,7 @@
   "scripts": {
     "tslint": "tslint src/**/*.ts",
     "build": "tsc",
-    "prepublish": "npm run build"
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",

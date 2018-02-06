@@ -1,6 +1,7 @@
-import { getProxySettings } from "./index";
+import { getAndTestProxySettings } from "./index";
+import { ProxySetting } from "./proxy-settings";
 
-getProxySettings().then((settings) => {
+getAndTestProxySettings(login).then((settings) => {
     if (settings) {
         // tslint:disable:no-console
         console.log(`http=${settings.http}`);
@@ -9,3 +10,10 @@ getProxySettings().then((settings) => {
 }).catch((e) => {
     console.log("Error", e);
 });
+
+async function login() {
+    return {
+        username: "1",
+        password: "1",
+    };
+}

@@ -8,6 +8,7 @@ install:
 - npm install
 script:
 - npm run build
+- npm test
 - npm run tslint
 
 deploy:

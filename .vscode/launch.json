@@ -16,7 +16,10 @@
             "outputCapture": "std",
             "sourceMaps": true,
             "preLaunchTask": "npm: build",
-            "internalConsoleOptions": "openOnSessionStart"
+            "internalConsoleOptions": "openOnSessionStart",
+            "env": {
+              "DEBUGGING": "1",
+            }
         }
     ]
 }

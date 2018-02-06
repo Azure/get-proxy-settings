@@ -2,21 +2,25 @@ import * as readline from "readline";
 import { getAndTestProxySettings } from "./proxy";
 import { ProxyCredentials, ProxySetting } from "./proxy-settings";
 
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+});
+
 getAndTestProxySettings(login).then((settings) => {
     if (settings) {
         // tslint:disable:no-console
         console.log(`http=${settings.http}`);
         console.log(`https=${settings.https}`);
     }
+    rl.close();
+
 }).catch((e) => {
     console.log("Error", e);
 });
 
 async function login() {
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout,
-    });
+
     let username;
     let password;
     if (process.env.DEBUGGING) {

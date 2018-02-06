@@ -2,9 +2,11 @@
 [![Build Status](https://travis-ci.org/Azure/get-proxy-settings.svg?branch=master)](https://travis-ci.org/Azure/get-proxy-settings)
 [![npm version](https://badge.fury.io/js/get-proxy-settings.svg)](https://badge.fury.io/js/get-proxy-settings)
 
-This library will read the system proxy setttings and return.
-It will first try to read from the environment variable `HTTP_PROXY` and `HTTPS_PROXY`
-On windows it will then look at the internet settings in the registry.
+This library support
+- Reading proxy settings from the `HTTP_PROXY` or `HTTPS_PROXY` environment variables
+- Reading proxy settings from the `HTTP_PROXY` or `HTTPS_PROXY` node configuration
+- Retrieveing the settings from the the ioternet settings on windows in the registry
+- Validating the connection and asking for credentials if needed
 
 ## Install
 
@@ -16,20 +18,30 @@ npm install --save get-proxy-settings
 
 **Import**
 ```js
-// Default import
-import getProxySettings from "get-proxy-settings";
 // With named import
-import { getProxySettings } from "get-proxy-settings";
+import { getProxySettings, getAndTestProxySettings } from "get-proxy-settings";
 
 // Or with commonjs
-const getProxySettings = require("get-proxy-settings");
+const { getProxySettings, getAndTestProxySettings } = require("get-proxy-settings");
 ```
 
 **Use**
 ```js
 
-async function my() {
+async function basic() {
     const proxy = await getProxySettings();
+    console.log("proxy", proxy.http, proxy.https);
+}
+
+// Get and validate the proxy settings
+
+async function withValidation() {
+    async function login() {
+        // Do any async operation to retrieve the username and password of the user(prompt?)
+        return {username: "abc", password: "123"}
+    }
+
+    const proxy = await getAndTestProxySettings(login);
     console.log("proxy", proxy.http, proxy.https);
 }
 ```

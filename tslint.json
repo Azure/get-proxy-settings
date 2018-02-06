@@ -1,6 +1,9 @@
 {
     "extends": "tslint:recommended",
     "defaultSeverity": "error",
+    "rulesDirectory": [
+      "tslint-no-unused-expression-chai"
+    ],
     "rules": {
       // TSLint override
       "no-this-assignment": [true, {"allow-destructuring": true}],
@@ -47,6 +50,7 @@
       "prefer-readonly": true,
       "prefer-const": true,
       "no-unused-expression": false,
+      "no-unused-expression-chai": true
     },
     "jsRules": {
       "object-literal-sort-keys": false,

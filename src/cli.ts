@@ -1,6 +1,6 @@
 import * as readline from "readline";
 import { getAndTestProxySettings } from "./proxy";
-import { ProxyCredentials, ProxySetting } from "./proxy-settings";
+import { ProxyCredentials } from "./proxy-settings";
 
 const rl = readline.createInterface({
     input: process.stdin,

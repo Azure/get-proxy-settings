@@ -1,8 +1,7 @@
-import * as http from "http";
-import * as https from "https";
 import * as npmConfLoader from "npm-conf";
-import { GetProxyError, ProxyAuthenticationRequiredError, ProxyInvalidCredentialsError } from "./proxy-errors";
+import { ProxyAuthenticationRequiredError } from "./proxy-errors";
 import { ProxyCredentials, ProxySetting, ProxySettings } from "./proxy-settings";
+import { validateProxySetting } from "./validate";
 import { Hive, openKey } from "./winreg";
 
 const npmConf = npmConfLoader();
@@ -14,46 +13,6 @@ export async function getProxySettings(): Promise<ProxySettings> {
         return getProxyWindows();
     } else {
         return null;
-    }
-}
-
-async function get(opts, useHttps = false): Promise<http.IncomingMessage> {
-    const send = useHttps ? https.get : http.get;
-    return new Promise<http.IncomingMessage>((resolve, reject) => {
-        const client = send(opts, (res) => {
-            if (res.statusCode < 200 || res.statusCode > 299) {
-                reject(res);
-            } else {
-                resolve(res);
-            }
-        });
-    });
-}
-
-export async function validateProxySetting(setting: ProxySetting) {
-    const auth = setting.getAuthorizationHeader();
-    try {
-        return await get({
-            host: setting.host,
-            port: setting.port,
-            path: "https://www.bing.com/",
-            headers: {
-                "Connection": "close",
-                "Host": "www.bing.com",
-                "Proxy-Authorization": auth,
-            },
-            agent: false,
-        });
-    } catch (e) {
-        if (e.statusCode === 407) {
-            if (setting.credentials) {
-                throw new ProxyInvalidCredentialsError(setting);
-            } else {
-                throw new ProxyAuthenticationRequiredError(setting);
-            }
-        } else {
-            throw new GetProxyError(setting, `Error validating proxy. Returned ${e.statusCode} ${e.statusMessage}`);
-        }
     }
 }
 

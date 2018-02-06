@@ -44,7 +44,7 @@ export interface RegKeyValues {
 function parseOutput(stdout: string): RegKeyValues {
     const lines = stdout.split("\n");
     const result = {};
-    for (const [i, line] of lines.slice(1).entries()) {
+    for (const line of lines.slice(1)) {
         const match = ITEM_PATTERN.exec(line.trim());
         if (match) {
             const name = match[1].trim();

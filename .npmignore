@@ -1,3 +1,5 @@
 .vscode/
 tslint.json
+.travis.yml
 *.log
+src/

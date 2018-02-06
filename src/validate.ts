@@ -19,7 +19,7 @@ async function get(opts, useHttps = false): Promise<http.IncomingMessage> {
 export async function validateProxySetting(setting: ProxySetting) {
     const auth = setting.getAuthorizationHeader();
     try {
-        return await get({
+        await get({
             host: setting.host,
             port: setting.port,
             path: "https://www.bing.com/",
@@ -30,6 +30,7 @@ export async function validateProxySetting(setting: ProxySetting) {
             },
             agent: false,
         });
+        return true;
     } catch (e) {
         if (e.statusCode === 407) {
             if (setting.credentials) {

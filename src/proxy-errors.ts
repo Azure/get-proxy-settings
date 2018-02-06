@@ -11,3 +11,9 @@ export class ProxyAuthenticationRequiredError extends GetProxyError {
         super(proxy, `Proxy require "${proxy}" authentication but no handle was provided.`);
     }
 }
+
+export class ProxyInvalidCredentialsError extends GetProxyError {
+    constructor(proxy: ProxySetting) {
+        super(proxy, `Proxy "${proxy}" was unable to connect due to invalid credentials`);
+    }
+}

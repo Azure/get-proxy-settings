@@ -14,6 +14,6 @@ getAndTestProxySettings(login).then((settings) => {
 async function login() {
     return {
         username: "1",
-        password: "1",
+        password: "11",
     };
 }

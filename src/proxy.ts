@@ -1,6 +1,6 @@
 import * as http from "http";
 import * as npmConfLoader from "npm-conf";
-import { GetProxyError, ProxyAuthenticationRequiredError } from "./proxy-errors";
+import { GetProxyError, ProxyAuthenticationRequiredError, ProxyInvalidCredentialsError } from "./proxy-errors";
 import { ProxyCredentials, ProxySetting, ProxySettings } from "./proxy-settings";
 import { Hive, openKey } from "./winreg";
 
@@ -28,26 +28,45 @@ async function get(opts): Promise<http.IncomingMessage> {
     });
 }
 
-export async function getAndTestProxySettings(login?: () => Promise<ProxyCredentials>) {
-    const settings = await getProxySettings();
+export async function validateProxySetting(setting: ProxySetting) {
+    const auth = setting.getAuthorizationHeader();
     try {
-        await get({
-            host: settings.http.host,
-            port: settings.http.port,
+        return await get({
+            host: setting.host,
+            port: setting.port,
             path: "http://google.com",
             headers: {
                 Host: "google.com",
+                Authorization: auth,
             },
         });
     } catch (e) {
-        // Proxy authentication required
         if (e.statusCode === 407) {
-            if (!login) { throw new ProxyAuthenticationRequiredError(settings.http); }
+            if (setting.credentials) {
+                throw new ProxyAuthenticationRequiredError(setting);
+            } else {
+                throw new ProxyInvalidCredentialsError(setting);
+            }
+        } else {
+            throw new GetProxyError(setting, `Error validating proxy. Returned ${e.statusCode} ${e.statusMessage}`);
+        }
+    }
+}
+
+export async function getAndTestProxySettings(login?: () => Promise<ProxyCredentials>) {
+    const settings = await getProxySettings();
+    try {
+        await validateProxySetting(settings.http);
+    } catch (e) {
+        // Proxy authentication required
+        if (e instanceof ProxyAuthenticationRequiredError) {
+            if (!login) { throw e; }
             const credentials = await login();
             settings.http.credentials = credentials;
             settings.https.credentials = credentials;
+            await validateProxySetting(settings.http);
         } else {
-            throw new GetProxyError(settings.http, "Error validating proxy.");
+            throw e;
         }
     }
 

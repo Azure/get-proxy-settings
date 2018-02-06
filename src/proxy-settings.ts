@@ -47,6 +47,13 @@ export class ProxySetting {
         return `${this.protocol}://${cred}${this.host}:${this.port}`;
     }
 
+    public getAuthorizationHeader() {
+        if (!this.credentials) { return null; }
+
+        const cred = `${this.credentials.username}:${this.credentials.password}`;
+        return `Basic ${Buffer.from(cred).toString("base64")}`;
+    }
+
     private _parseUrl(value: string) {
         value = ensureProtocol(value);
         const url = new URL(value);

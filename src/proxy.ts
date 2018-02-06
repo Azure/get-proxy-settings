@@ -1,4 +1,5 @@
 import * as http from "http";
+import * as https from "https";
 import * as npmConfLoader from "npm-conf";
 import { GetProxyError, ProxyAuthenticationRequiredError, ProxyInvalidCredentialsError } from "./proxy-errors";
 import { ProxyCredentials, ProxySetting, ProxySettings } from "./proxy-settings";
@@ -16,9 +17,10 @@ export async function getProxySettings(): Promise<ProxySettings> {
     }
 }
 
-async function get(opts): Promise<http.IncomingMessage> {
+async function get(opts, useHttps = false): Promise<http.IncomingMessage> {
+    const send = useHttps ? https.get : http.get;
     return new Promise<http.IncomingMessage>((resolve, reject) => {
-        const client = http.get(opts, (res) => {
+        const client = send(opts, (res) => {
             if (res.statusCode < 200 || res.statusCode > 299) {
                 reject(res);
             } else {
@@ -93,21 +95,21 @@ export async function getProxyWindows(): Promise<ProxySettings> {
  * This can be either as HTTP(s)_PROXY environment variable or in the npm config
  */
 export function getEnvProxy(): ProxySettings {
-    const https = process.env.HTTPS_PROXY ||
+    const httpsProxy = process.env.HTTPS_PROXY ||
         process.env.https_proxy ||
         npmConf.get("https-proxy") ||
         npmConf.get("proxy") ||
         null;
 
-    const http = process.env.HTTP_PROXY ||
+    const httpProxy = process.env.HTTP_PROXY ||
         process.env.http_proxy ||
         npmConf.get("http-proxy") ||
         npmConf.get("proxy") ||
         null;
-    if (!http && !https) {
+    if (!httpProxy && !httpsProxy) {
         return null;
     }
-    return { http: new ProxySetting(http), https: new ProxySetting(https) };
+    return { http: new ProxySetting(httpProxy), https: new ProxySetting(httpsProxy) };
 }
 
 function parseWindowsProxySetting(proxySetting: string): ProxySettings {

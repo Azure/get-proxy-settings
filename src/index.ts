@@ -2,6 +2,7 @@ import * as npmConfLoader from "npm-conf";
 import { Hive, openKey } from "./winreg";
 
 const npmConf = npmConfLoader();
+const URL_REGEX = /^https?:\/\/.*$/;
 
 export interface ProxySettings {
     http?: string;
@@ -57,7 +58,15 @@ function parseWindowsProxySetting(proxySetting: string): ProxySettings {
     const settings = proxySetting.split(";").map(x => x.split("=", 2));
     const result: ProxySettings = {};
     for (const [key, value] of settings) {
-        result[key] = value;
+        result[key] = ensureProtocol(value);
     }
     return result;
+}
+
+function ensureProtocol(value: string): string {
+    if (URL_REGEX.test(value)) {
+        return value;
+    } else {
+        return `http://${value}`;
+    }
 }

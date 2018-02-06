@@ -18,12 +18,14 @@ export async function getProxySettings(): Promise<ProxySettings> {
 
 async function get(opts): Promise<http.IncomingMessage> {
     return new Promise<http.IncomingMessage>((resolve, reject) => {
-        http.get(opts, (res) => {
+        console.log("new sutff");
+        const client = http.get(opts, (res) => {
             if (res.statusCode < 200 || res.statusCode > 299) {
                 reject(res);
             } else {
                 resolve(res);
             }
+            res.pipe(process.stdout);
         });
     });
 }
@@ -34,18 +36,20 @@ export async function validateProxySetting(setting: ProxySetting) {
         return await get({
             host: setting.host,
             port: setting.port,
-            path: "http://google.com",
+            path: "https://www.bing.com/",
             headers: {
-                Host: "google.com",
-                Authorization: auth,
+                "Connection": "close",
+                "Host": "www.bing.com",
+                "Proxy-Authorization": auth,
             },
+            agent: false,
         });
     } catch (e) {
         if (e.statusCode === 407) {
             if (setting.credentials) {
-                throw new ProxyAuthenticationRequiredError(setting);
-            } else {
                 throw new ProxyInvalidCredentialsError(setting);
+            } else {
+                throw new ProxyAuthenticationRequiredError(setting);
             }
         } else {
             throw new GetProxyError(setting, `Error validating proxy. Returned ${e.statusCode} ${e.statusMessage}`);
@@ -64,7 +68,7 @@ export async function getAndTestProxySettings(login?: () => Promise<ProxyCredent
             const credentials = await login();
             settings.http.credentials = credentials;
             settings.https.credentials = credentials;
-            await validateProxySetting(settings.http);
+            // await validateProxySetting(settings.http);
         } else {
             throw e;
         }

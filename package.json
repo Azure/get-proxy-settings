@@ -7,7 +7,7 @@
   "scripts": {
     "tslint": "tslint --project tsconfig.json src/**/*.ts",
     "build": "tsc",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "test": "mocha",
     "test-watch": "mocha --watch --watch-extensions ts"
   },

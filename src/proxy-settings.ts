@@ -9,7 +9,7 @@ export enum Protocol {
 export interface ProxySettingAttributes {
     host: string;
     port: string;
-    protocol: Protocol;
+    protocol?: Protocol;
     credentials?: ProxyCredentials;
 }
 
@@ -24,7 +24,7 @@ export class ProxySetting {
     public protocol: Protocol = Protocol.Http;
     public credentials: ProxyCredentials;
 
-    constructor(params: string | ProxySetting) {
+    constructor(params: string | ProxySetting | ProxySettingAttributes) {
         if (typeof params === "string") {
             this._parseUrl(params);
         } else {

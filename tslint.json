@@ -45,11 +45,11 @@
       "ban-comma-operator": true,
       "no-dynamic-delete": true,
       "prefer-readonly": true,
-      "prefer-const": true
+      "prefer-const": true,
+      "no-unused-expression": false,
     },
     "jsRules": {
       "object-literal-sort-keys": false,
       "trailing-comma": [false]
     }
   }
-  

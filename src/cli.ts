@@ -6,6 +6,9 @@ const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
 });
+// To test
+// process.env.HTTP_PROXY = "http://localhost:8888";
+// process.env.HTTPS_PROXY = "http://localhost:8888";
 
 getAndTestProxySettings(login).then((settings) => {
     if (settings) {

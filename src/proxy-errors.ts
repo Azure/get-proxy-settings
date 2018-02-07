@@ -17,3 +17,13 @@ export class ProxyInvalidCredentialsError extends GetProxyError {
         super(proxy, `Proxy "${proxy}" was unable to connect due to invalid credentials`);
     }
 }
+
+/**
+ * Error when the connection to the proxy failed ERRCONNREFUSED
+ * Proxy might be down
+ */
+export class ProxyConnectionRefusedError extends GetProxyError {
+    constructor(proxy: ProxySetting) {
+        super(proxy, `Proxy "${proxy}" doesn't seem to be available. Connection refused.`);
+    }
+}

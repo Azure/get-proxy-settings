@@ -34,7 +34,6 @@ async function basic() {
 }
 
 // Get and validate the proxy settings
-
 async function withValidation() {
     async function login() {
         // Do any async operation to retrieve the username and password of the user(prompt?)
@@ -46,6 +45,14 @@ async function withValidation() {
 }
 ```
 
+## Config
+
+Update the test url(Which url is used to validate the proxy)
+```js
+import { defaults } from "get-proxy-settings";
+
+defaults.testUrl = "https://example.com";
+```
 
 # Contributing
 

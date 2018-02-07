@@ -1,6 +1,8 @@
 import { expect } from "chai";
 import * as nock from "nock";
-import { GetProxyError, ProxyAuthenticationRequiredError, ProxyInvalidCredentialsError } from "./proxy-errors";
+import {
+    GetProxyError, ProxyAuthenticationRequiredError, ProxyConnectionRefusedError, ProxyInvalidCredentialsError,
+} from "./proxy-errors";
 import { ProxySetting } from "./proxy-settings";
 import { validateProxySetting } from "./validate";
 
@@ -58,6 +60,23 @@ describe("Validate Proxy Settings", () => {
             expect(e.message).to.eql("Error validating proxy. Returned 500 null");
             expect(e).not.to.be.instanceof(ProxyAuthenticationRequiredError);
             expect(e).not.to.be.instanceof(ProxyInvalidCredentialsError);
+        }
+    });
+
+    it("should throw ProxyConnectionRefusedError if connection is refused", async () => {
+        nock("http://someproxy.com:1234").get(() => true).replyWithError({ code: "ECONNREFUSED" });
+
+        try {
+            const settings = new ProxySetting({
+                host: "someproxy.com", port: "1234",
+                credentials: { username: "abc", password: "123" },
+            });
+            await validateProxySetting(settings);
+            expect.fail("Should have thown an error");
+        } catch (e) {
+            expect(e).to.be.instanceof(ProxyConnectionRefusedError);
+            expect(e.message).to
+                .eql(`Proxy "http://abc:123@someproxy.com:1234" doesn't seem to be available. Connection refused.`);
         }
     });
 });

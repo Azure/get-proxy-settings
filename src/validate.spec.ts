@@ -1,6 +1,8 @@
 import { expect } from "chai";
 import * as nock from "nock";
-import { GetProxyError, ProxyAuthenticationRequiredError, ProxyConnectionRefusedError, ProxyInvalidCredentialsError } from "./proxy-errors";
+import {
+    GetProxyError, ProxyAuthenticationRequiredError, ProxyConnectionRefusedError, ProxyInvalidCredentialsError,
+} from "./proxy-errors";
 import { ProxySetting } from "./proxy-settings";
 import { validateProxySetting } from "./validate";
 

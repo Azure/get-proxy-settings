@@ -20,6 +20,7 @@ getAndTestProxySettings(login).then((settings) => {
 
 }).catch((e) => {
     console.log("Error", e);
+    rl.close();
 });
 
 async function login() {

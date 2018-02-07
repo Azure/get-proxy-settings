@@ -28,6 +28,7 @@ async function get(opts, useHttps = false): Promise<http.IncomingMessage> {
  * @throws {ProxyConnectionRefusedError} if it cannot connect to the proxy
  * @throws {ProxyAuthenticationRequiredError} if proxy settings doesn't have credentials but is required
  * @throws {ProxyInvalidCredentialsError} if proxy settings has credentials but proxy denies the request(407)
+ * @throws {GetProxyError} for other errors
  */
 export async function validateProxySetting(setting: ProxySetting) {
     const auth = setting.getAuthorizationHeader();

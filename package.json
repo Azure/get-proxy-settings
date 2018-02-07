@@ -1,6 +1,6 @@
 {
   "name": "get-proxy-settings",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Retrieve proxy settings specified by the system",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

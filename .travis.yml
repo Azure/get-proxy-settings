@@ -3,10 +3,6 @@ node_js:
 - 9
 - 8
 
-branches:
-  only:
-  - master
-
 install:
 - npm install
 script:

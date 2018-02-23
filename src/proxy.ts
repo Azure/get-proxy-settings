@@ -1,9 +1,9 @@
 import * as npmConfLoader from "npm-conf";
+import * as url from "url";
 import { ProxyAuthenticationRequiredError } from "./proxy-errors";
 import { ProxyCredentials, ProxySetting, ProxySettings } from "./proxy-settings";
 import { validateProxySetting } from "./validate";
 import { Hive, openKey } from "./winreg";
-
 const npmConf = npmConfLoader();
 
 export async function getProxySettings(): Promise<ProxySettings> {
@@ -71,11 +71,40 @@ export function getEnvProxy(): ProxySettings {
     return { http: new ProxySetting(httpProxy), https: new ProxySetting(httpsProxy) };
 }
 
-function parseWindowsProxySetting(proxySetting: string): ProxySettings {
-    const settings = proxySetting.split(";").map(x => x.split("=", 2));
-    const result: ProxySettings = {};
-    for (const [key, value] of settings) {
-        result[key] = new ProxySetting(value);
+export function parseWindowsProxySetting(proxySetting: string): ProxySettings {
+    if (!proxySetting) { return null; }
+    if (isValidUrl(proxySetting)) {
+        const setting = new ProxySetting(proxySetting);
+        return {
+            http: setting,
+            https: setting,
+        };
     }
-    return result;
+    const settings = proxySetting.split(";").map(x => x.split("=", 2));
+    const result = {};
+    for (const [key, value] of settings) {
+        if (value) {
+            result[key] = new ProxySetting(value);
+        }
+    }
+
+    return processResults(result);
+}
+
+function isValidUrl(value: string) {
+    const obj = url.parse(value);
+    return Boolean(obj.hostname);
+}
+
+function processResults(results: { [key: string]: ProxySetting }) {
+    const { http, https } = results;
+    if (http && https) {
+        return { http, https };
+    } else if (http) {
+        return { http, https: http };
+    } else if (https) {
+        return { http: https, https };
+    } else {
+        return null;
+    }
 }

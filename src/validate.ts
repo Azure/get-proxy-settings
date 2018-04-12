@@ -42,6 +42,7 @@ export async function validateProxySetting(setting: ProxySetting) {
                 "Connection": "close",
                 "Host": testUrl.host,
                 "Proxy-Authorization": auth,
+                "User-Agent": "Mozilla/5.0",
             },
             agent: false,
         });

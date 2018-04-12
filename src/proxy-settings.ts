@@ -64,6 +64,9 @@ export class ProxySetting {
         } else {
             this.protocol = Protocol.Http;
         }
+        if (!this.port) {
+            this.port = this.protocol === Protocol.Https ? "443" : "80";
+        }
 
         if (url.username) {
             this.credentials = {

@@ -11,6 +11,22 @@ describe("ProxySettings", () => {
             expect(setting.credentials).to.be.undefined;
         });
 
+        it("When port is 80 and http protocol. Port is set correctly", () => {
+            const setting = new ProxySetting("http://127.0.0.1:80");
+            expect(setting.host).to.eql("127.0.0.1");
+            expect(setting.port).to.eql("80");
+            expect(setting.protocol).to.eql(Protocol.Http);
+            expect(setting.credentials).to.be.undefined;
+        });
+
+        it("When port is 443 and https protocol. Port is set correctly", () => {
+            const setting = new ProxySetting("https://example.com:443");
+            expect(setting.host).to.eql("example.com");
+            expect(setting.port).to.eql("443");
+            expect(setting.protocol).to.eql(Protocol.Https);
+            expect(setting.credentials).to.be.undefined;
+        });
+
         it("Parse a url without protocol", () => {
             const setting = new ProxySetting("localhost:8888");
             expect(setting.host).to.eql("localhost");

@@ -18,6 +18,7 @@ export async function getProxySettings(): Promise<ProxySettings> {
 
 export async function getAndTestProxySettings(login?: () => Promise<ProxyCredentials>) {
     const settings = await getProxySettings();
+    if (!settings) {return; }
     try {
         await validateProxySetting(settings.http);
     } catch (e) {

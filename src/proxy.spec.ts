@@ -31,6 +31,15 @@ describe("proxy", () => {
             expect(proxy).to.eq(null);
         });
 
+        it("returns null when proxy enabled is 0x00000000", async () => {
+            winregData = {
+                ProxyEnable: { value: "0x00000000" },
+                ProxyServer: { value: "localhost:8888" },
+            };
+            const proxy = await proxySpy.getProxyWindows();
+            expect(proxy).to.eq(null);
+        });
+
         it("returns proxy settings when proxy enabled is 0x1", async () => {
             winregData = {
                 ProxyEnable: { value: "0x1" },

@@ -18,7 +18,7 @@ export async function getProxySettings(): Promise<ProxySettings> {
 
 export async function getAndTestProxySettings(login?: () => Promise<ProxyCredentials>) {
     const settings = await getProxySettings();
-    if (!settings) {return; }
+    if (!settings) { return; }
     try {
         await validateProxySetting(settings.http);
     } catch (e) {
@@ -40,10 +40,12 @@ export async function getAndTestProxySettings(login?: () => Promise<ProxyCredent
 export default getProxySettings;
 
 export async function getProxyWindows(): Promise<ProxySettings> {
+    // HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings
     const values = await openKey(Hive.HKCU, "Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings");
     const proxy = values["ProxyServer"];
     const enable = values["ProxyEnable"];
-    if (enable && enable.value && proxy) {
+    const enableValue = Number(enable && enable.value);
+    if (enableValue > 0 && proxy) {
         return parseWindowsProxySetting(proxy.value);
     } else {
         return null;

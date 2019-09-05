@@ -6,7 +6,7 @@ import { validateProxySetting } from "./validate";
 import { Hive, openKey } from "./winreg";
 const npmConf = npmConfLoader();
 
-export async function getProxySettings(): Promise<ProxySettings> {
+export async function getProxySettings(): Promise<ProxySettings | null> {
     const envProxy = getEnvProxy();
     if (envProxy) { return envProxy; }
     if (process.platform === "win32") {

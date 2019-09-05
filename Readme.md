@@ -5,7 +5,7 @@
 This library support
 - Reading proxy settings from the `HTTP_PROXY` or `HTTPS_PROXY` environment variables
 - Reading proxy settings from the `HTTP_PROXY` or `HTTPS_PROXY` node configuration
-- Retrieveing the settings from the the ioternet settings on windows in the registry
+- Retrieving the settings from the internet settings on Windows in the registry
 - Validating the connection and asking for credentials if needed
 
 ## Install
@@ -47,7 +47,7 @@ async function withValidation() {
 
 ## Config
 
-Update the test url(Which url is used to validate the proxy)
+Update the test url (Which url is used to validate the proxy)
 ```js
 import { defaults } from "get-proxy-settings";
 

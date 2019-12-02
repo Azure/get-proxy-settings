@@ -1,3 +1,5 @@
+**Note: This project is not actively maintained. If some issues come up we'll look into fixing them but new features will most likely not make it.**
+
 # System Proxy
 [![Build Status](https://travis-ci.org/Azure/get-proxy-settings.svg?branch=master)](https://travis-ci.org/Azure/get-proxy-settings)
 [![npm version](https://badge.fury.io/js/get-proxy-settings.svg)](https://badge.fury.io/js/get-proxy-settings)
@@ -7,6 +9,7 @@ This library support
 - Reading proxy settings from the `HTTP_PROXY` or `HTTPS_PROXY` node configuration
 - Retrieving the settings from the internet settings on Windows in the registry
 - Validating the connection and asking for credentials if needed
+- Note that it doesn't support every proxy system. If you are using electron it is recommended to use electron/chromium built in proxy support which is much more advanced. 
 
 ## Install
 

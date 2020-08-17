@@ -1,7 +1,8 @@
 language: node_js
 node_js:
-- 9
-- 8
+- 10
+- 12
+- 14
 
 install:
 - npm install
@@ -19,4 +20,4 @@ deploy:
     secure: a4RaA+Wva7aLYO2Zul6ax3yeCQqZF+ZnwfzJ3XeoMHSyE5yHok92Fkt3fv1Q7u6T7VREElnRVRRHz/Ziu/ri6PmajjktmsjZA1TUvA6uvZRejqtJM0z13s7/XF7AgS7sfUSH5f3vm7EVt4FbqoNOliXLi00PJ3Eqw2b/4qKzIKW3bxiou89dsZxwh01YRQjuELjj2sxcecRY4eBCgZ3u5oniP4Tl0SA8kMu5fQ6WUCLP4ohtDtJb6cdCt+UhkJivFZNc2VIPdBqdXUERy7TZQGiaZ/HpgH4Txi4doxjNt5yu2mwren0CBpnkSJSU+IvxHMFj7fya4B1zmp1vaFUm1J/Q3jDVLOXQ2u06QDppeIneU/YuEbOEPR29nUPRXkBbpni5javXTcLC2c1J3tPvuUvCW/MCEanfISlpzfiqMnOPBluY7Djxb2a2TiitOraHtwaXKXzXmAF/0fnDpP9SuLeL1KoFR2H47CbEgPtwtZLUb3GSx/jV35N2yKZ3wUjbdnD88LHXZFV+g23oqyecqJO8emvlMyb6f2Y+kijk8Bdw51Mayl4HYy8ybRY+P4BdT1AQWRqzXoaOxfuHRS5hUlKESYpgb/rLLJedMm9LMUhO5An6fBAcT0WeC+xetcoD9H/7rtpI6cwasJvGybtyaDIxRx7SpyV3RW3XFUWqP1I=
   on:
     tags: true
-    node_js: 9
+    node_js: 12

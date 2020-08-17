@@ -39,7 +39,7 @@ export async function getAndTestProxySettings(login?: () => Promise<ProxyCredent
 
 export default getProxySettings;
 
-export async function getProxyWindows(): Promise<ProxySettings> {
+export async function getProxyWindows(): Promise<ProxySettings | null> {
     // HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings
     const values = await openKey(Hive.HKCU, "Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings");
     const proxy = values["ProxyServer"];

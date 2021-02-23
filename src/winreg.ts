@@ -1,4 +1,4 @@
-import { exec } from "child_process";
+import { execFile } from "child_process";
 import * as path from "path";
 
 const ITEM_PATTERN = /^(.*)\s(REG_SZ|REG_MULTI_SZ|REG_EXPAND_SZ|REG_DWORD|REG_QWORD|REG_BINARY|REG_NONE)\s+([^\s].*)$/;
@@ -20,9 +20,12 @@ interface ExecOutput {
     stderr: string;
 }
 
-async function execAsync(command: string): Promise<ExecOutput> {
+async function execAsync(
+    command: string,
+    args: string[] = []
+): Promise<ExecOutput> {
     return new Promise<ExecOutput>((resolve, reject) => {
-        exec(command, (err, stdout, stderr) => {
+        execFile(command, args, (err, stdout, stderr) => {
             if (err) {
                 reject(err);
             } else {
@@ -56,9 +59,12 @@ function parseOutput(stdout: string): RegKeyValues {
     return result;
 }
 
-export async function openKey(hive: string, key: string): Promise<RegKeyValues> {
+export async function openKey(
+    hive: string,
+    key: string
+): Promise<RegKeyValues> {
     const keyPath = `${hive}\\${key}`;
-    const { stdout } = await execAsync(`${getRegPath()} query "${keyPath}"`);
+    const { stdout } = await execAsync(getRegPath(), ["query", keyPath]);
     const values = parseOutput(stdout);
     return values;
 }

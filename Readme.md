@@ -9,7 +9,7 @@ This library support
 - Reading proxy settings from the `HTTP_PROXY` or `HTTPS_PROXY` node configuration
 - Retrieving the settings from the internet settings on Windows in the registry
 - Validating the connection and asking for credentials if needed
-- Note that it doesn't support every proxy system. If you are using electron it is recommended to use electron/chromium built in proxy support which is much more advanced. 
+- Note that it doesn't support every proxy system. If you are using electron it is recommended to use electron/chromium built in proxy support which is much more advanced.
 
 ## Install
 
@@ -70,3 +70,8 @@ provided by the bot. You will only need to do this once across all repos using o
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+## Credits
+
+- [Timothee Guerin](https://github.com/Azure/timotheeguerin)
+- Adar Zandberg from the CxSCA AppSec team at Checkmarx. (Finding Command injection vulnerability)
